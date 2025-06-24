@@ -5,21 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
     <title>ToDoList</title>
 </head>
 <body>
-<div class="todo">
+<div class="todo" id="gradient-box">
     <div class="todo__box">
         <h2 class="todo__title">Список дел</h2>
         <div class="todo__row">
             <input class="todo__input" type="text" placeholder="Укажите задачу">
-            <button class="todo__btn">Добавить</button>
+            <button class="todo__btn btn">Добавить</button>
+        </div>
+        <div class="todo__filters">
+            <button class="todo__all-tasks btn btn-filters pick" data-filter="all">Все задачи</button>
+            <button class="todo__done-tasks btn btn-filters" data-filter="done">Выполнено</button>
+            <button class="todo__not-done-tasks btn btn-filters" data-filter="active">Не выполнено</button>
         </div>
         <ul class="todo__list">
-            <li class="checked">Задача</li>
-            <li>Задача</li>
-            <li>Задача</li>
-            <li>Задача</li>
+
         </ul>
     </div>
 </div>
