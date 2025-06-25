@@ -144,7 +144,12 @@
     align-items: center;
 }
 
+
 .todo__list li div:hover {
+    background-color: #f1f1f1;
+}
+
+.remind {
     background-color: #f1f1f1;
 }
 
@@ -153,6 +158,6 @@
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 

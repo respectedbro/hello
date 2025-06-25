@@ -6,6 +6,30 @@ const filterButtons = document.querySelectorAll('.btn-filters');
 const todoFilter = document.querySelector('.todo__filters')
 let angle = 0;
 
+const loadTasks = async () => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=4');
+    const todos = await response.json()
+    todos.forEach(todo => {
+      let li = document.createElement('li');
+      li.innerHTML = todo.title
+
+      let span = document.createElement('span');
+      span.innerHTML = '\u00d7';
+      li.append(span);
+
+      let remind = document.createElement('div');
+      remind.innerHTML = '&#9743';
+      li.append(remind);
+
+      todoList.append(li);
+    })
+    saveData();
+  } catch (err) {
+    console.log('Ошибка');
+  }
+}
+
 const updateGradient = () => {
   angle = (angle + 1) % 360;
   gradientBox.style.background = `linear-gradient(${angle}deg, green, goldenrod)`;
@@ -34,8 +58,17 @@ const saveData = () => {
   localStorage.setItem('data', todoList.innerHTML);
 };
 const showData = () => {
-  todoList.innerHTML = localStorage.getItem('data');
+
+  const savedData = localStorage.getItem('data');
+
+  if (savedData) {
+    todoList.innerHTML = savedData;
+  } else {
+
+    loadTasks();
+  }
 };
+
 
 todoBtn.addEventListener('click', () => {
   addTask();
@@ -44,16 +77,38 @@ todoBtn.addEventListener('click', () => {
 todoList.addEventListener('click', (e) => {
   if (e.target.tagName === 'LI') {
     e.target.classList.toggle('checked');
+    const remindBtn = e.target.querySelector('div');
+    if (remindBtn) {
+      remindBtn.classList.toggle('hidden', e.target.classList.contains('checked'));
+    }
     saveData();
   } else if (e.target.tagName === 'SPAN') {
     e.target.parentElement.remove();
     saveData();
   } else if (e.target.tagName === 'DIV') {
-    e.target.innerHTML = '&#9742';
-    saveData();
+    if (e.target.closest('li').classList.contains('checked')) return;
+
+    const sec = prompt('Введите время напоминания в секундах:');
+    if (sec && !isNaN(sec)) {
+      const time = parseInt(sec) * 1000;
+      const taskItem = e.target.closest('li');
+
+      e.target.innerHTML = '&#9742;';
+      e.target.classList.add('remind');
+
+      setTimeout(() => {
+        if (!taskItem.classList.contains('checked')) {
+          e.target.innerHTML = '&#9743;';
+          e.target.classList.remove('remind');
+          saveData();
+          alert(`Напоминание о задаче - ${taskItem.firstChild.textContent}`);
+        }
+      }, time);
+
+      saveData();
+    }
   }
 });
-
 showData();
 
 setInterval(updateGradient, 20);
