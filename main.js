@@ -13,16 +13,16 @@ const loadTasks = async () => {
         const todos = await response.json();
         todos.forEach(todo => {
             const li = document.createElement('li');
-            li.classList.add('.todo-item');
+            li.classList.add('todo-item');
             li.innerHTML = todo.title;
 
             const span = document.createElement('span');
-            span.classList.add('.todo-remove');
+            span.classList.add('todo-remove');
             span.innerHTML = '\u00d7';
             li.append(span);
 
             const remind = document.createElement('div');
-            remind.classList.add('.todo-remind');
+            remind.classList.add('todo-remind');
             remind.innerHTML = '&#9743';
             li.append(remind);
 
@@ -44,15 +44,15 @@ const addTask = () => {
         alert('Введите задачу');
     } else {
         const li = document.createElement('li');
-        li.classList.add('.todo-item');
+        li.classList.add('todo-item');
         li.innerHTML = todoInput.value;
         todoList.append(li);
         const span = document.createElement('span');
-        span.classList.add('.todo-remove');
+        span.classList.add('todo-remove');
         span.innerHTML = '\u00d7';
         li.append(span);
         const remind = document.createElement('div');
-        remind.classList.add('.todo-remind');
+        remind.classList.add('todo-remind');
         remind.innerHTML = '&#9743';  //&#9742;
         li.append(remind);
     }
